@@ -7,6 +7,10 @@ export const scene = function () {
 
 	this.cursorKeys = null;
 	this.spacebar = null;
+
+	this.itemText = null;
+
+	this.itemCount = 0;
 };
 scene.prototype.init = function () {
 	//
@@ -17,10 +21,13 @@ scene.prototype.preload = function () {
 	this.load.tilemapTiledJSON('level0', 'asset/map/level0.json');
 
 	this.load.spritesheet('player', 'asset/image/player.png', { frameWidth: 32, frameHeight: 48 });
+	this.load.spritesheet('items', 'asset/image/items.png', { frameWidth: 16, frameHeight: 16 });
 
 	this.load.bitmapFont('serif', 'asset/font/serif_0.png', 'asset/font/serif.fnt');
 };
 scene.prototype.create = function () {
+	this.itemCount = 0;
+
 	const map = this.make.tilemap({ key: 'level0' });
 	const tiles = map.addTilesetImage('tiles', 'tiles');
 	const foreground = map.createLayer('foreground', tiles);
@@ -28,12 +35,21 @@ scene.prototype.create = function () {
 	map.setCollisionBetween(0, 32);
 	this.physics.world.setBounds(0, 0, foreground.width, foreground.height);
 
-	console.log(foreground);
+	const pickupLayer = map.getObjectLayer('pickups');
+	const pickupItems = [];
+	if (pickupLayer) {
+		pickupLayer.objects.forEach((pickupData) => {
+			const newSprite = this.physics.add.staticSprite(pickupData.x, pickupData.y, 'items', 0);
+			pickupItems.push(newSprite);
+		});
+	}
+
 
 	this.player = this.physics.add.sprite(16, 40, 'player', 1);
 	this.player.body.collideWorldBounds = true;
-
 	this.physics.add.collider(this.player, foreground);
+
+	this.physics.add.overlap(this.player, pickupItems, this.giveItemToPlayer, null, this);
 
 	this.cursorKeys = this.input.keyboard.createCursorKeys();
 	this.spacebar = this.input.keyboard.addKey('SPACE');
@@ -41,7 +57,14 @@ scene.prototype.create = function () {
 	this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player);
 
-    // this.add.bitmapText(16, 16, 'serif', 'NEON GENESIS PRESTON MANNING ', 20);
+    this.itemText = this.add.bitmapText(16, 16, 'serif', 'items : ' + this.itemCount, 20);
+    this.itemText.setScrollFactor(0);
+}
+scene.prototype.giveItemToPlayer = function(player, item) {
+	this.itemCount++;
+	this.itemText.text = 'items : ' + this.itemCount;
+
+	item.destroy();
 }
 scene.prototype.updatePlayerInput = function() {
 	const onTheGround = this.player.body.blocked.down;
