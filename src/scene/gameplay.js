@@ -17,6 +17,8 @@ scene.prototype.preload = function () {
 	this.load.tilemapTiledJSON('level0', 'asset/map/level0.json');
 
 	this.load.spritesheet('player', 'asset/image/player.png', { frameWidth: 32, frameHeight: 48 });
+
+	this.load.bitmapFont('serif', 'asset/font/serif_0.png', 'asset/font/serif.fnt');
 };
 scene.prototype.create = function () {
 	const map = this.make.tilemap({ key: 'level0' });
@@ -38,6 +40,8 @@ scene.prototype.create = function () {
 
 	this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player);
+
+    // this.add.bitmapText(16, 16, 'serif', 'NEON GENESIS PRESTON MANNING ', 20);
 }
 scene.prototype.updatePlayerInput = function() {
 	const onTheGround = this.player.body.blocked.down;
