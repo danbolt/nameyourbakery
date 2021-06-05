@@ -1,6 +1,8 @@
+import {default as Constants} from './constants.js';
+
 import * as Gameplay from './scene/gameplay.js';
 
-import {default as Constants} from './constants.js';
+import VDPPipeline from './pipeline/vdp.js';
 
 const main = function () {
 	let game = new Phaser.Game({
@@ -23,6 +25,9 @@ const main = function () {
 			arcade: {
 	            gravity: { y: Constants.GRAVITY }
 	        }
+		},
+		pipeline: {
+			'vdp': VDPPipeline
 		}
 	});
 

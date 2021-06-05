@@ -25,13 +25,15 @@ scene.prototype.preload = function () {
 	this.load.spritesheet('items', 'asset/image/items.png', { frameWidth: 16, frameHeight: 16 });
 
 	this.load.bitmapFont('serif', 'asset/font/serif_0.png', 'asset/font/serif.fnt');
+
 };
 scene.prototype.create = function () {
-	this.itemCount = 0;
+	const vdpPipeline = this.renderer.pipelines.get('vdp');
 
 	const map = this.make.tilemap({ key: 'level0' });
 	const tiles = map.addTilesetImage('tiles', 'tiles');
 	const foreground = map.createLayer('foreground', tiles);
+	foreground.setPipeline(vdpPipeline);
 
 	map.setCollisionBetween(0, 32);
 	this.physics.world.setBounds(0, 0, foreground.width, foreground.height);
@@ -42,6 +44,7 @@ scene.prototype.create = function () {
 		pickupLayer.objects.forEach((pickupData) => {
 			const newItem = this.physics.add.staticSprite(pickupData.x, pickupData.y, 'items', 0);
 			pickupItems.push(newItem);
+			newItem.setPipeline(vdpPipeline);
 		});
 	}
 
@@ -51,6 +54,7 @@ scene.prototype.create = function () {
 		exitLayer.objects.forEach((exitData) => {
 			const newExit = this.physics.add.staticSprite(exitData.x, exitData.y, 'items', 1);
 			exits.push(newExit);
+			newExit.setPipeline(vdpPipeline);
 		});
 	}
 
@@ -72,8 +76,12 @@ scene.prototype.create = function () {
 	this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.player);
 
+    this.itemCount = 0;
     this.itemText = this.add.bitmapText(16, 16, 'serif', 'items : ' + this.itemCount, 20);
     this.itemText.setScrollFactor(0);
+
+    this.player.setPipeline(vdpPipeline);
+
 }
 scene.prototype.createBenryAnims = function() {
 	this.anims.create({
