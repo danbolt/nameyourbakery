@@ -90,6 +90,13 @@ scene.prototype.createBenryAnims = function() {
 		frameRate: 4,
 		repeat: -1
 	})
+
+	this.anims.create({
+		key: 'run',
+		frames: this.anims.generateFrameNumbers('player', { frames: [4, 5, 6] }),
+		frameRate: 10,
+		repeat: -1
+	})
 };
 scene.prototype.giveItemToPlayer = function(player, item) {
 	this.itemCount++;
@@ -111,13 +118,19 @@ scene.prototype.updatePlayerInput = function() {
 
 	// TODO: gamepad polling
 
-	if (leftIsDown)
+	if (leftIsDown) {
 		this.player.body.setVelocityX(-Constants.WALK_SPEED);
+
+		this.player.play('run', true);
+	}
 	else if (rightIsDown) {
 		this.player.body.setVelocityX(Constants.WALK_SPEED);
+
+		this.player.play('run', true);
 	}
 	else {
 		this.player.body.setVelocityX(0);
+		this.player.play('idle', true);
 	}
 
 	let crouching = false;
