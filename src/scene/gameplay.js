@@ -1,4 +1,7 @@
 export const name = 'Gameplay';
+import {default as Constants} from '../constants.js';
+
+
 export const scene = function () {
 	this.player = null;
 
@@ -21,7 +24,7 @@ scene.prototype.create = function () {
 	const foreground = map.createLayer('foreground', tiles);
 	map.setCollisionBetween(0, 32);
 
-	this.player = this.physics.add.sprite(150, 40, 'player', 1);
+	this.player = this.physics.add.sprite(16, 40, 'player', 1);
 
 	this.physics.add.collider(this.player, foreground);
 
@@ -29,23 +32,33 @@ scene.prototype.create = function () {
 	this.spacebar = this.input.keyboard.addKey('SPACE');
 }
 scene.prototype.updatePlayerInput = function() {
+	const onTheGround = this.player.body.blocked.down;
+
 	let leftIsDown =  this.cursorKeys.left.isDown;
 	let rightIsDown =  this.cursorKeys.right.isDown;
-	let spaceIsDown = this.spacebar.isDown;
+	let crouchIsDown = this.cursorKeys.down.isDown;
+	let spaceIsDown = this.spacebar.isDown && (this.time.now - this.spacebar.timeDown) < 100;
+
 
 	// TODO: gamepad polling
 
 	if (leftIsDown)
-		this.player.body.setVelocityX(-100);
+		this.player.body.setVelocityX(-Constants.WALK_SPEED);
 	else if (rightIsDown) {
-		this.player.body.setVelocityX(100);
+		this.player.body.setVelocityX(Constants.WALK_SPEED);
 	}
 	else {
 		this.player.body.setVelocityX(0);
 	}
 
-	if (spaceIsDown && this.player.body.blocked.down) {
-		this.player.body.setVelocityY(-200);
+	let crouching = false;
+	if (crouchIsDown && onTheGround) {
+		crouching = true;
+		this.player.body.setVelocityX(0);
+	}
+
+	if (spaceIsDown && onTheGround) {
+		this.player.body.setVelocityY(crouching ? -Constants.POUNCE_VELOCITY : -Constants.JUMP_VELOCITY);
 	}
 }
 scene.prototype.update = function () {
