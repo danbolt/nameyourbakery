@@ -53,7 +53,7 @@ scene.prototype.create = function () {
 		});
 	}
 
-	this.player = this.physics.add.sprite(16, 40, 'player', 1);
+	this.player = this.physics.add.sprite(16, 30 * 16, 'player', 1);
 	this.player.body.collideWorldBounds = true;
 	this.physics.add.collider(this.player, foreground);
 

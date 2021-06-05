@@ -3,8 +3,10 @@ const constants = {
 	SCREEN_HEIGHT: 224,
 
 	WALK_SPEED: 110,
-	JUMP_VELOCITY: 287,
-	POUNCE_VELOCITY: 313
+	JUMP_VELOCITY: 279,
+	POUNCE_VELOCITY: 380,
+
+	GRAVITY: 700
 };
 
 export default constants;
