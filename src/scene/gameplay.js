@@ -4,6 +4,7 @@ import {default as Constants} from '../constants.js';
 
 export const scene = function () {
 	this.player = null;
+	this.facingLeft = false;
 
 	this.cursorKeys = null;
 	this.spacebar = null;
@@ -53,9 +54,14 @@ scene.prototype.create = function () {
 		});
 	}
 
+	this.createBenryAnims();
+
 	this.player = this.physics.add.sprite(16, 30 * 16, 'player', 1);
 	this.player.body.collideWorldBounds = true;
+	this.player.body.setSize(20, 48);
 	this.physics.add.collider(this.player, foreground);
+	this.facingLeft = false;
+	this.player.play('idle');
 
 	this.physics.add.overlap(this.player, pickupItems, this.giveItemToPlayer, null, this);
 	this.physics.add.overlap(this.player, exits, this.playerFindsExit, null, this);
@@ -69,6 +75,14 @@ scene.prototype.create = function () {
     this.itemText = this.add.bitmapText(16, 16, 'serif', 'items : ' + this.itemCount, 20);
     this.itemText.setScrollFactor(0);
 }
+scene.prototype.createBenryAnims = function() {
+	this.anims.create({
+		key: 'idle',
+		frames: this.anims.generateFrameNumbers('player', { frames: [0, 0, 0, 1, 2, 1, 0, 0, 0] }),
+		frameRate: 4,
+		repeat: -1
+	})
+};
 scene.prototype.giveItemToPlayer = function(player, item) {
 	this.itemCount++;
 	this.itemText.text = 'items : ' + this.itemCount;
@@ -107,6 +121,13 @@ scene.prototype.updatePlayerInput = function() {
 	if (spaceIsDown && onTheGround) {
 		this.player.body.setVelocityY(crouching ? -Constants.POUNCE_VELOCITY : -Constants.JUMP_VELOCITY);
 	}
+
+	if (leftIsDown) {
+		this.facingLeft = true;
+	} else if (rightIsDown) {
+		this.facingLeft = false;
+	}
+	this.player.flipX = this.facingLeft;
 }
 scene.prototype.update = function () {
 	this.updatePlayerInput();
