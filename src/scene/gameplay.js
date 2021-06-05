@@ -22,14 +22,22 @@ scene.prototype.create = function () {
 	const map = this.make.tilemap({ key: 'level0' });
 	const tiles = map.addTilesetImage('tiles', 'tiles');
 	const foreground = map.createLayer('foreground', tiles);
+
 	map.setCollisionBetween(0, 32);
+	this.physics.world.setBounds(0, 0, foreground.width, foreground.height);
+
+	console.log(foreground);
 
 	this.player = this.physics.add.sprite(16, 40, 'player', 1);
+	this.player.body.collideWorldBounds = true;
 
 	this.physics.add.collider(this.player, foreground);
 
 	this.cursorKeys = this.input.keyboard.createCursorKeys();
 	this.spacebar = this.input.keyboard.addKey('SPACE');
+
+	this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.startFollow(this.player);
 }
 scene.prototype.updatePlayerInput = function() {
 	const onTheGround = this.player.body.blocked.down;
@@ -38,7 +46,6 @@ scene.prototype.updatePlayerInput = function() {
 	let rightIsDown =  this.cursorKeys.right.isDown;
 	let crouchIsDown = this.cursorKeys.down.isDown;
 	let spaceIsDown = this.spacebar.isDown && (this.time.now - this.spacebar.timeDown) < 100;
-
 
 	// TODO: gamepad polling
 
