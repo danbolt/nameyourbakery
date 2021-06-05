@@ -39,17 +39,26 @@ scene.prototype.create = function () {
 	const pickupItems = [];
 	if (pickupLayer) {
 		pickupLayer.objects.forEach((pickupData) => {
-			const newSprite = this.physics.add.staticSprite(pickupData.x, pickupData.y, 'items', 0);
-			pickupItems.push(newSprite);
+			const newItem = this.physics.add.staticSprite(pickupData.x, pickupData.y, 'items', 0);
+			pickupItems.push(newItem);
 		});
 	}
 
+	const exitLayer = map.getObjectLayer('exits');
+	const exits = [];
+	if (exitLayer) {
+		exitLayer.objects.forEach((exitData) => {
+			const newExit = this.physics.add.staticSprite(exitData.x, exitData.y, 'items', 1);
+			exits.push(newExit);
+		});
+	}
 
 	this.player = this.physics.add.sprite(16, 40, 'player', 1);
 	this.player.body.collideWorldBounds = true;
 	this.physics.add.collider(this.player, foreground);
 
 	this.physics.add.overlap(this.player, pickupItems, this.giveItemToPlayer, null, this);
+	this.physics.add.overlap(this.player, exits, this.playerFindsExit, null, this);
 
 	this.cursorKeys = this.input.keyboard.createCursorKeys();
 	this.spacebar = this.input.keyboard.addKey('SPACE');
@@ -66,6 +75,10 @@ scene.prototype.giveItemToPlayer = function(player, item) {
 
 	item.destroy();
 }
+scene.prototype.playerFindsExit = function() {
+	// TODO: this will need to be a transition
+	this.scene.start(name);
+};
 scene.prototype.updatePlayerInput = function() {
 	const onTheGround = this.player.body.blocked.down;
 
