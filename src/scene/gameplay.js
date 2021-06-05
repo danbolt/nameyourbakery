@@ -99,7 +99,6 @@ scene.prototype.create = function () {
 
     this.player.setPipeline(vdpPipeline);
 
-
 	this.time.addEvent({
 		loop: true,
 		callback: this.updateCatboyText,
@@ -154,8 +153,6 @@ scene.prototype.updatePlayerInput = function() {
 	let rightIsDown =  this.cursorKeys.right.isDown;
 	let crouchIsDown = this.cursorKeys.down.isDown;
 	let spaceIsDown = this.spacebar.isDown && (this.time.now - this.spacebar.timeDown) < 100;
-
-	// TODO: gamepad polling
 
 	if (leftIsDown) {
 		this.player.body.setVelocityX(-Constants.WALK_SPEED);
