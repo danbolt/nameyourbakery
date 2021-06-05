@@ -97,6 +97,20 @@ scene.prototype.createBenryAnims = function() {
 		frameRate: 10,
 		repeat: -1
 	})
+
+	this.anims.create({
+		key: 'crouch',
+		frames: this.anims.generateFrameNumbers('player', { frames: [3] }),
+		frameRate: 10,
+		repeat: -1
+	})
+
+	this.anims.create({
+		key: 'midair',
+		frames: this.anims.generateFrameNumbers('player', { frames: [7] }),
+		frameRate: 10,
+		repeat: -1
+	})
 };
 scene.prototype.giveItemToPlayer = function(player, item) {
 	this.itemCount++;
@@ -137,6 +151,11 @@ scene.prototype.updatePlayerInput = function() {
 	if (crouchIsDown && onTheGround) {
 		crouching = true;
 		this.player.body.setVelocityX(0);
+		this.player.play('crouch', true);
+	}
+
+	if (!onTheGround) {
+		this.player.play('midair', true);
 	}
 
 	if (spaceIsDown && onTheGround) {
