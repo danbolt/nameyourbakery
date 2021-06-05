@@ -2,6 +2,9 @@ export const name = 'Gameplay';
 import {default as Constants} from '../constants.js';
 
 
+const moods = ['cheery', 'hungry', 'content', 'pensive', 'still hungry', 'moody', 'fine', 'thinking', 'no!', 'fishy', 'eager', 'sleepy', 'jumpy', 'bumpy', 'happy', 'woozy', 'aware', 'catty', 'nosy'].map((str) => { return 'current mood: ' + str; });
+console.log(moods);
+
 export const scene = function () {
 	this.player = null;
 	this.facingLeft = false;
@@ -85,10 +88,22 @@ scene.prototype.create = function () {
     this.cameras.main.startFollow(this.player);
 
     this.itemCount = 0;
-    this.itemText = this.add.bitmapText(16, 16, 'serif', 'items : ' + this.itemCount, 20);
+    this.itemText = this.add.bitmapText(16, 20, 'serif', 'items : ' + this.itemCount, 20);
     this.itemText.setScrollFactor(0);
 
+    this.catboyText = this.add.bitmapText(16, 8, 'serif', moods[0], 20);
+    this.catboyText.setScrollFactor(0);
+    this.updateCatboyText();
+
     this.player.setPipeline(vdpPipeline);
+
+
+	this.time.addEvent({
+		loop: true,
+		callback: this.updateCatboyText,
+		callbackScope: this,
+		delay: 15000
+	})
 
 }
 scene.prototype.createBenryAnims = function() {
@@ -177,6 +192,9 @@ scene.prototype.updatePlayerInput = function() {
 		this.facingLeft = false;
 	}
 	this.player.flipX = this.facingLeft;
+}
+scene.prototype.updateCatboyText = function() {
+	this.catboyText.text = moods[~~(Math.random() * moods.length)];
 }
 scene.prototype.update = function () {
 	this.updatePlayerInput();
