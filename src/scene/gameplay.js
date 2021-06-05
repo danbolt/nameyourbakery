@@ -67,6 +67,14 @@ scene.prototype.create = function () {
 	this.facingLeft = false;
 	this.player.play('idle');
 
+	const startsLayer = map.getObjectLayer('starts');
+	if (startsLayer) {
+		startsLayer.objects.forEach((startData) => {
+			this.player.x = startData.x;
+			this.player.y = startData.y;
+		});
+	}
+
 	this.physics.add.overlap(this.player, pickupItems, this.giveItemToPlayer, null, this);
 	this.physics.add.overlap(this.player, exits, this.playerFindsExit, null, this);
 
@@ -152,6 +160,7 @@ scene.prototype.updatePlayerInput = function() {
 		crouching = true;
 		this.player.body.setVelocityX(0);
 		this.player.play('crouch', true);
+	} else {
 	}
 
 	if (!onTheGround) {
