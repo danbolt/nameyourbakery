@@ -15,6 +15,7 @@ export const scene = function () {
 	this.itemText = null;
 
 	this.itemCount = 0;
+	this.totalItemCount = 999;
 };
 scene.prototype.init = function () {
 	//
@@ -50,6 +51,7 @@ scene.prototype.create = function () {
 			newItem.setPipeline(vdpPipeline);
 		});
 	}
+	this.totalItemCount = pickupItems.length;
 
 	const exitLayer = map.getObjectLayer('exits');
 	const exits = [];
@@ -88,7 +90,7 @@ scene.prototype.create = function () {
     this.cameras.main.startFollow(this.player);
 
     this.itemCount = 0;
-    this.itemText = this.add.bitmapText(16, 20, 'serif', 'items : ' + this.itemCount, 20);
+    this.itemText = this.add.bitmapText(16, 20, 'serif', 'items : ' + this.itemCount + '/' + this.totalItemCount, 20);
     this.itemText.setScrollFactor(0);
 
     this.catboyText = this.add.bitmapText(16, 8, 'serif', moods[0], 20);
@@ -137,7 +139,7 @@ scene.prototype.createBenryAnims = function() {
 };
 scene.prototype.giveItemToPlayer = function(player, item) {
 	this.itemCount++;
-	this.itemText.text = 'items : ' + this.itemCount;
+	this.itemText.text = 'items : ' + this.itemCount + '/' + this.totalItemCount;
 
 	item.destroy();
 }
