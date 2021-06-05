@@ -17,6 +17,12 @@ const main = function () {
 		},
 		plugins: {
 		    global: [],
+		},
+		physics: {
+			default: 'arcade',
+			arcade: {
+	            gravity: { y: 500 }
+	        }
 		}
 	});
 
