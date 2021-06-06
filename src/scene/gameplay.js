@@ -2,7 +2,7 @@ export const name = 'Gameplay';
 import {default as Constants} from '../constants.js';
 
 
-const moods = ['cheery', 'hungry', 'content', 'pensive', 'still hungry', 'moody', 'fine', 'thinking', 'no!', 'fishy', 'eager', 'sleepy', 'jumpy', 'bumpy', 'happy', 'woozy', 'aware', 'catty', 'nosy'].map((str) => { return 'current mood: ' + str; });
+const moods = ['cheery', 'hungry', 'content', 'pensive', 'still hungry', 'moody', 'fine', 'thinking', 'no!', 'fishy', 'eager', 'sleepy', 'jumpy', 'bumpy', 'happy', 'woozy', 'aware', 'catty', 'nosy'].map((str) => { return 'mY mOoD: ' + str; });
 
 export const scene = function () {
 	this.player = null;
@@ -94,7 +94,7 @@ scene.prototype.create = function () {
     this.cameras.main.startFollow(this.player);
 
     this.itemCount = 0;
-    this.itemText = this.add.bitmapText(16, 20, 'serif', 'items : ' + this.itemCount + '/' + this.totalItemCount, 20);
+    this.itemText = this.add.bitmapText(16, 20, 'serif', 'cArRotS : ' + this.itemCount + '/' + this.totalItemCount, 20);
     this.itemText.setScrollFactor(0);
 
     this.catboyText = this.add.bitmapText(16, 8, 'serif', moods[0], 20);
@@ -142,7 +142,7 @@ scene.prototype.createBenryAnims = function() {
 };
 scene.prototype.giveItemToPlayer = function(player, item) {
 	this.itemCount++;
-	this.itemText.text = 'items : ' + this.itemCount + '/' + this.totalItemCount;
+	this.itemText.text = 'cArRotS : ' + this.itemCount + '/' + this.totalItemCount;
 
 	if (this.itemCount === this.totalItemCount) {
 		this.scene.start('WinScreen');
