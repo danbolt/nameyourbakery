@@ -131,6 +131,10 @@ scene.prototype.giveItemToPlayer = function(player, item) {
 	this.itemCount++;
 	this.itemText.text = 'items : ' + this.itemCount + '/' + this.totalItemCount;
 
+	if (this.itemCount === this.totalItemCount) {
+		this.scene.start('WinScreen');
+	}
+
 	item.destroy();
 }
 scene.prototype.playerFindsExit = function() {

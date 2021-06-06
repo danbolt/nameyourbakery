@@ -15,5 +15,5 @@ scene.prototype.preload = function () {
 };
 scene.prototype.create = function () {
 	this.scene.stop('Preload');
-	this.scene.start('Gameplay');
+	this.scene.start('TitleScreen');
 };
