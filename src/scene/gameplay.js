@@ -3,7 +3,6 @@ import {default as Constants} from '../constants.js';
 
 
 const moods = ['cheery', 'hungry', 'content', 'pensive', 'still hungry', 'moody', 'fine', 'thinking', 'no!', 'fishy', 'eager', 'sleepy', 'jumpy', 'bumpy', 'happy', 'woozy', 'aware', 'catty', 'nosy'].map((str) => { return 'current mood: ' + str; });
-console.log(moods);
 
 export const scene = function () {
 	this.player = null;
@@ -21,14 +20,6 @@ scene.prototype.init = function () {
 	//
 };
 scene.prototype.preload = function () {
-	this.load.image('tiles', 'asset/image/tiles.png');
-
-	this.load.tilemapTiledJSON('level0', 'asset/map/level0.json');
-
-	this.load.spritesheet('player', 'asset/image/player.png', { frameWidth: 32, frameHeight: 48 });
-	this.load.spritesheet('items', 'asset/image/items.png', { frameWidth: 16, frameHeight: 16 });
-
-	this.load.bitmapFont('serif', 'asset/font/serif_0.png', 'asset/font/serif.fnt');
 
 };
 scene.prototype.create = function () {
