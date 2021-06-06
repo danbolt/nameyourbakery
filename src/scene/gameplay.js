@@ -32,7 +32,7 @@ scene.prototype.create = function () {
 	const foreground = map.createLayer('foreground', tiles);
 	foreground.setPipeline(vdpPipeline);
 
-	map.setCollisionBetween(0, 32);
+	map.setCollisionBetween(0, 63);
 	this.physics.world.setBounds(0, 0, foreground.width, foreground.height);
 
 	const pickupLayer = map.getObjectLayer('pickups');
