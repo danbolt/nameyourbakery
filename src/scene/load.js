@@ -12,6 +12,9 @@ scene.prototype.preload = function () {
 
 	this.load.spritesheet('player', 'asset/image/player.png', { frameWidth: 32, frameHeight: 48 });
 	this.load.spritesheet('items', 'asset/image/items.png', { frameWidth: 16, frameHeight: 16 });
+
+	this.load.image('backgrounds', 'asset/image/backgrounds.png');
+	this.load.image('backgrounds2', 'asset/image/backgrounds2.png');
 };
 scene.prototype.create = function () {
 	this.scene.stop('Preload');

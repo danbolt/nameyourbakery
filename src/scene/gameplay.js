@@ -25,14 +25,25 @@ scene.prototype.preload = function () {
 scene.prototype.create = function () {
 	const vdpPipeline = this.renderer.pipelines.get('vdp');
 
+	this.parralaxBackground = this.add.image(0, 0, 'backgrounds', 0);
+	this.parralaxBackground.setScrollFactor(0, 0);
+	this.parralaxBackground.setOrigin(0, 0);
+	this.parralaxBackground.setPipeline(vdpPipeline);
+
+	this.parralaxBackground2 = this.add.image(0, 0, 'backgrounds2', 0);
+	this.parralaxBackground2.setScrollFactor(0, 0);
+	this.parralaxBackground2.setOrigin(0, 0);
+	this.parralaxBackground2.setPipeline(vdpPipeline);
+
 	const map = this.make.tilemap({ key: 'level0' });
 	const tiles = map.addTilesetImage('tiles', 'tiles');
 	const background = map.createLayer('background', tiles);
 	background.setPipeline(vdpPipeline);
 	const foreground = map.createLayer('foreground', tiles);
 	foreground.setPipeline(vdpPipeline);
+	this.map = map;
 
-	map.setCollisionBetween(0, 63);
+	map.setCollisionBetween(0, 64);
 	this.physics.world.setBounds(0, 0, foreground.width, foreground.height);
 
 	const pickupLayer = map.getObjectLayer('pickups');
@@ -194,4 +205,8 @@ scene.prototype.updateCatboyText = function() {
 }
 scene.prototype.update = function () {
 	this.updatePlayerInput();
+
+	this.parralaxBackground.y = (Constants.SCREEN_HEIGHT - this.parralaxBackground.height) * (this.player.y / this.map.heightInPixels);
+	this.parralaxBackground2.x = (Constants.SCREEN_WIDTH - this.parralaxBackground2.width) * (this.player.x / this.map.widthInPixels);
+	this.parralaxBackground2.y = (Constants.SCREEN_HEIGHT - this.parralaxBackground2.height) * (this.player.y / this.map.heightInPixels);
 };
