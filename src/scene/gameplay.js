@@ -27,6 +27,8 @@ scene.prototype.create = function () {
 
 	const map = this.make.tilemap({ key: 'level0' });
 	const tiles = map.addTilesetImage('tiles', 'tiles');
+	const background = map.createLayer('background', tiles);
+	background.setPipeline(vdpPipeline);
 	const foreground = map.createLayer('foreground', tiles);
 	foreground.setPipeline(vdpPipeline);
 
