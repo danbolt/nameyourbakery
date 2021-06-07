@@ -21,5 +21,5 @@ scene.prototype.preload = function () {
 };
 scene.prototype.create = function () {
 	this.scene.stop('Preload');
-	this.scene.start('Cinematic');
+	this.scene.start('TitleScreen');
 };

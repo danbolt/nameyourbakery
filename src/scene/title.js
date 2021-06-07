@@ -19,6 +19,6 @@ scene.prototype.create = function () {
 
 	const spacebar = this.input.keyboard.addKey('SPACE');
 	spacebar.on('down', () => {
-		this.scene.start('Gameplay');
+		this.scene.start('Cinematic', { index: 0 });
 	})
 };

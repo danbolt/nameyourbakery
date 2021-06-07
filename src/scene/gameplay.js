@@ -57,6 +57,7 @@ scene.prototype.create = function () {
 	}
 	this.totalItemCount = pickupItems.length;
 
+
 	const exitLayer = map.getObjectLayer('exits');
 	const exits = [];
 	if (exitLayer) {
@@ -94,6 +95,7 @@ scene.prototype.create = function () {
     this.cameras.main.startFollow(this.player);
 
     this.itemCount = 0;
+	// this.itemCount = this.totalItemCount - 1;
     this.itemText = this.add.bitmapText(16, 20, 'serif', 'cArRotS : ' + this.itemCount + '/' + this.totalItemCount, 20);
     this.itemText.setScrollFactor(0);
 
@@ -147,7 +149,7 @@ scene.prototype.giveItemToPlayer = function(player, item) {
 	this.itemText.text = 'cArRotS : ' + this.itemCount + '/' + this.totalItemCount;
 
 	if (this.itemCount === this.totalItemCount) {
-		this.scene.start('WinScreen');
+		this.scene.start('Cinematic', { index: 1 });
 	}
 
 	item.destroy();

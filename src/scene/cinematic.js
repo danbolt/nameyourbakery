@@ -45,11 +45,13 @@ const level1Config = {
 	nextState: 'TitleScreen'
 };
 
+const configs = [ level0Config, level1Config ];
+
 export const scene = function () {
 	this.dialogeBacking = null;
 };
-scene.prototype.init = function () {
-	this.config = level0Config;
+scene.prototype.init = function (data) {
+	this.config = configs[data.index];
 };
 scene.prototype.preload = function () {
 
