@@ -14,15 +14,42 @@ const shake0 = {
 	"4": 200
 }
 
+const level0Config = {
+	image: 'introcomic',
+	lines: dialogue0,
+	shake: shake0
+};
+
+
+const dialogue1 = [
+	'MORTAL! WHERE ARE THE CARROTS?!?',
+	'They\'re coming!\nPlease be patient sir!!!',
+	'Catboy Benry has the carrots!\nVery easy!',
+	'THIS IS ACCEPTABLE.',
+	'I TAKE MY LEAVE.',
+	'Thank goodness...',
+	'We\'re back!\nGil, how was the bakery?',
+	'Well!\nYou see...',
+	'Catboy Benry did good!'
+];
+
+const shake1 = {
+	"0": 381,
+	"4": 111,
+};
+
+const level1Config = {
+	image: 'endcomic',
+	lines: dialogue1,
+	shake: shake1,
+	nextState: 'TitleScreen'
+};
+
 export const scene = function () {
 	this.dialogeBacking = null;
 };
 scene.prototype.init = function () {
-	this.config = {
-		image: 'introcomic',
-		lines: dialogue0,
-		shake: shake0
-	}
+	this.config = level0Config;
 };
 scene.prototype.preload = function () {
 
@@ -102,13 +129,21 @@ scene.prototype.create = function () {
     		})
     	} else {
     		tileDoneEmitter.on('done', () => {
-    			this.cameras.main.fadeOut(800);
     			this.time.addEvent({
     				delay: 1000,
     				callback: () => {
-    					this.scene.start('Gameplay');
+
+    					this.cameras.main.fadeOut(700);
+    					this.time.addEvent({
+		    				delay: 900,
+		    				callback: () => {
+		    					this.scene.start(this.config.nextState ? this.config.nextState : 'Gameplay');
+		    				}
+		    			})
+
     				}
     			})
+    			
     		});
     	}
     }
