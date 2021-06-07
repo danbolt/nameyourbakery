@@ -17,7 +17,14 @@ const shake0 = {
 const level0Config = {
 	image: 'introcomic',
 	lines: dialogue0,
-	shake: shake0
+	shake: shake0,
+	bips: {
+		"1": 'player_bip',
+		"2": 'asset_sfx_blip',
+		"3": 'player_bip',
+		"4": 'player_bip',
+		"5": 'asset_sfx_blip'
+	}
 };
 
 
@@ -42,7 +49,10 @@ const level1Config = {
 	image: 'endcomic',
 	lines: dialogue1,
 	shake: shake1,
-	nextState: 'TitleScreen'
+	nextState: 'TitleScreen',
+	bips: {
+
+	}
 };
 
 const configs = [ level0Config, level1Config ];
@@ -58,6 +68,12 @@ scene.prototype.preload = function () {
 
 };
 scene.prototype.create = function () {
+	const bips = {}
+	const bipKeys = ['asset_sfx_talk_1', 'asset_sfx_talk_m', 'boss_bip', 'player_bip', 'asset_sfx_blip'];
+	bipKeys.forEach((key) => {
+		bips[key] = this.sound.add(key);
+	});
+
 	const vdpPipeline = this.renderer.pipelines.get('vdp');
 
 	this.cameras.main.setPipeline(vdpPipeline);
@@ -110,6 +126,12 @@ scene.prototype.create = function () {
 
 			this.time.addEvent({ delay: 70, callback: () => {
 				loadingText.text += line[bipCount];
+
+				if (this.config.bips[index]) {
+					bips[this.config.bips[index]].play();
+				} else {
+					bips['asset_sfx_talk_1'].play();
+				}
 
 				bipCount++;
 

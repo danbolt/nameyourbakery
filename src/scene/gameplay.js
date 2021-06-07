@@ -15,6 +15,8 @@ export const scene = function () {
 
 	this.itemCount = 0;
 	this.totalItemCount = 999;
+
+	this.jumpSound = null;
 };
 scene.prototype.init = function () {
 	//
@@ -24,6 +26,8 @@ scene.prototype.preload = function () {
 };
 scene.prototype.create = function () {
 	const vdpPipeline = this.renderer.pipelines.get('vdp');
+
+	this.jumpSound = this.sound.add('jump2');
 
 	this.parralaxBackground = this.add.image(0, 0, 'backgrounds', 0);
 	this.parralaxBackground.setScrollFactor(0, 0);
@@ -195,6 +199,7 @@ scene.prototype.updatePlayerInput = function() {
 
 	if (spaceIsDown && onTheGround) {
 		this.player.body.setVelocityY(crouching ? -Constants.POUNCE_VELOCITY : -Constants.JUMP_VELOCITY);
+		this.jumpSound.play();
 	}
 
 	if (leftIsDown) {
