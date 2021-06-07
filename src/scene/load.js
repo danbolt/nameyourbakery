@@ -46,7 +46,7 @@ scene.prototype.preload = function () {
 scene.prototype.create = function () {
 	this.scene.stop('Preload');
 	
-	const loadingText = this.add.bitmapText(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, 'serif', 'the following content\nis not cannon\n\nplease click to\ncontinue', 20);
+	const loadingText = this.add.bitmapText(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, 'serif', 'the following content\nis not canon\n\nplease click to continue\n(sound on!)', 20);
     loadingText.setScrollFactor(0);
     loadingText.setCenterAlign();
     loadingText.originX = 0.5;

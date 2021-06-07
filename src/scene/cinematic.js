@@ -4,7 +4,7 @@ import {default as Constants} from '../constants.js';
 const dialogue0 = [
 	'ANVIL DISTRICT 16XX',
 	'Oh geez oh geez!\nWhere is he?',
-	'You called for Catboy Benrey?',
+	'You called on Catboy Benrey?',
 	'I need the carrots now!\nYou promised all of them!',
 	'We\'re running out of time!\nHe\'s going to destroy the bakery!',
 	'Okay!\nCatboy Benrey will get your carrots!'
@@ -30,7 +30,7 @@ const level0Config = {
 
 const dialogue1 = [
 	'MORTAL! WHERE ARE THE CARROTS?!?',
-	'They\'re coming!\nPlease be patient sir!!!',
+	'They\'re coming sir!\nPlease be patient!!!',
 	'Catboy Benry has the carrots!\nVery easy!',
 	'THIS IS ACCEPTABLE.',
 	'I TAKE MY LEAVE.',
@@ -120,7 +120,7 @@ scene.prototype.create = function () {
 	    	duration: 417,
 	    	paused: true,
 	    	ease: Phaser.Math.Easing.Cubic.InOut,
-	    	delay: (i === 0) ? 1000 : 700
+	    	delay: (i === 0) ? 1000 : 900
 	    })
 
 	    tweens.push(t);
