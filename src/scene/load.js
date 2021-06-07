@@ -15,8 +15,11 @@ scene.prototype.preload = function () {
 
 	this.load.image('backgrounds', 'asset/image/backgrounds.png');
 	this.load.image('backgrounds2', 'asset/image/backgrounds2.png');
+
+	this.load.image('introcomic', 'asset/image/introcomic.png');
+	this.load.image('endcomic', 'asset/image/endcomic.png');
 };
 scene.prototype.create = function () {
 	this.scene.stop('Preload');
-	this.scene.start('TitleScreen');
+	this.scene.start('Cinematic');
 };

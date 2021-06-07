@@ -110,6 +110,8 @@ scene.prototype.create = function () {
 		delay: 15000
 	})
 
+	this.cameras.main.fadeIn(700);
+
 }
 scene.prototype.createBenryAnims = function() {
 	this.anims.create({

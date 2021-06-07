@@ -5,6 +5,7 @@ import * as Preload from './scene/preload.js';
 import * as Load from './scene/load.js';
 import * as TitleScreen from './scene/title.js';
 import * as WinScreen from './scene/winscreen.js';
+import * as Cinematic from './scene/cinematic.js';
 
 import VDPPipeline from './pipeline/vdp.js';
 
@@ -40,6 +41,7 @@ const main = function () {
 	game.scene.add(Gameplay.name, Gameplay.scene, false);
 	game.scene.add(TitleScreen.name, TitleScreen.scene, false);
 	game.scene.add(WinScreen.name, WinScreen.scene, false);
+	game.scene.add(Cinematic.name, Cinematic.scene, false);
 	game.scene.start(Preload.name);
 };
 
