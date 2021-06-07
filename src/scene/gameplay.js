@@ -29,6 +29,14 @@ scene.prototype.create = function () {
 
 	this.jumpSound = this.sound.add('jump2');
 
+
+	const vibes = this.sound.add('vibes', {
+		volume: 0.2,
+		loop: true
+	});
+	vibes.play();
+	this.vibes = vibes;
+
 	this.parralaxBackground = this.add.image(0, 0, 'backgrounds', 0);
 	this.parralaxBackground.setScrollFactor(0, 0);
 	this.parralaxBackground.setOrigin(0, 0);
@@ -154,6 +162,7 @@ scene.prototype.giveItemToPlayer = function(player, item) {
 
 	if (this.itemCount === this.totalItemCount) {
 		this.scene.start('Cinematic', { index: 1 });
+		this.vibes.stop();
 	}
 
 	item.destroy();

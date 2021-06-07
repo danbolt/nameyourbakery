@@ -39,6 +39,9 @@ scene.prototype.preload = function () {
 	sounds.forEach((sfxName) => {
 		this.load.audio(sfxName, 'asset/sfx/' + sfxName + '.wav');
 	});
+
+	this.load.audio('vibes', 'asset/bgm/vibes.ogg');
+	this.load.audio('ingame', 'asset/bgm/ingame.ogg');
 };
 scene.prototype.create = function () {
 	this.scene.stop('Preload');
@@ -50,7 +53,7 @@ scene.prototype.create = function () {
     loadingText.originY = 0.5;
 
     this.input.once(Phaser.Input.Events.POINTER_DOWN, () => {
-    	this.scene.start('TitleScreen');
+    	this.scene.start('lol');
     })
 
 	// 

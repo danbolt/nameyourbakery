@@ -49,9 +49,16 @@ const level1Config = {
 	image: 'endcomic',
 	lines: dialogue1,
 	shake: shake1,
-	nextState: 'TitleScreen',
+	nextState: 'lol',
 	bips: {
-
+		"0": 'asset_sfx_talk_m',
+		"1": 'player_bip',
+		"2": 'asset_sfx_blip',
+		"3": 'asset_sfx_talk_m',
+		"4": 'asset_sfx_talk_m',
+		"5": 'player_bip',
+		"7": 'player_bip',
+		"8": 'asset_sfx_blip',
 	}
 };
 
@@ -73,6 +80,13 @@ scene.prototype.create = function () {
 	bipKeys.forEach((key) => {
 		bips[key] = this.sound.add(key);
 	});
+
+
+	const ingame = this.sound.add('ingame', {
+		volume: 0.2,
+		loop: true
+	});
+	ingame.play();
 
 	const vdpPipeline = this.renderer.pipelines.get('vdp');
 
@@ -158,7 +172,7 @@ scene.prototype.create = function () {
     			this.time.addEvent({
     				delay: 1000,
     				callback: () => {
-
+    					ingame.stop();
     					this.cameras.main.fadeOut(700);
     					this.time.addEvent({
 		    				delay: 900,
