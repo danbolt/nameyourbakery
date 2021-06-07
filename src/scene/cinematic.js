@@ -60,6 +60,8 @@ scene.prototype.preload = function () {
 scene.prototype.create = function () {
 	const vdpPipeline = this.renderer.pipelines.get('vdp');
 
+	this.cameras.main.setPipeline(vdpPipeline);
+
 	const image = this.add.image(0, 0, this.config.image);
 	image.setOrigin(0);
 	image.setPipeline(vdpPipeline);

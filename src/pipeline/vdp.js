@@ -16,8 +16,9 @@ void main ()
     float r = floor(texture.r * 8.0) / 8.0;
     float g = floor(texture.g * 8.0) / 8.0;
     float b = floor(texture.b * 8.0) / 8.0;
+    float a = floor(texture.w * 8.0) / 8.0;
 
-    gl_FragColor = vec4(r, g, b, texture.w);
+    gl_FragColor = vec4(r, g, b, a);
 }
 `;
 
