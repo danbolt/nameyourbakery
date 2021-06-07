@@ -10,11 +10,19 @@ const dialogue0 = [
 	'Okay!\nCatboy Benrey will get your carrots!'
 ];
 
+const shake0 = {
+	"4": 200
+}
+
 export const scene = function () {
 	this.dialogeBacking = null;
 };
 scene.prototype.init = function () {
-	//
+	this.config = {
+		image: 'introcomic',
+		lines: dialogue0,
+		shake: shake0
+	}
 };
 scene.prototype.preload = function () {
 
@@ -23,7 +31,7 @@ scene.prototype.preload = function () {
 scene.prototype.create = function () {
 	const vdpPipeline = this.renderer.pipelines.get('vdp');
 
-	const image = this.add.image(0, 0, 'introcomic');
+	const image = this.add.image(0, 0, this.config.image);
 	image.setOrigin(0);
 	image.setPipeline(vdpPipeline);
 
@@ -39,7 +47,7 @@ scene.prototype.create = function () {
     const loadingText = this.add.bitmapText(16, Constants.SCREEN_HEIGHT / 4 * 3 + 8, 'serif', '', 20);
     loadingText.setScrollFactor(0);
 
-    const numberOfTiles = 6;
+    const numberOfTiles = this.config.lines.length;
 
     let tweens = [];
     for (let i = 0; i < numberOfTiles; i++) {
@@ -57,13 +65,18 @@ scene.prototype.create = function () {
 	    tweens.push(t);
     }
     for (let i = 0; i < numberOfTiles; i++) {
-    	const line = dialogue0[i];
+    	const line = this.config.lines[i];
     	const t = tweens[i];
 
     	const tileDoneEmitter = new Phaser.Events.EventEmitter();
     	let bipCount = 0;
 
 		t.on(Phaser.Tweens.Events.TWEEN_COMPLETE, () => {
+			const index = i;
+			if (this.config.shake[index]) {
+				this.cameras.main.shake(this.config.shake[index]);
+			}
+
 			this.time.addEvent({ delay: 70, callback: () => {
 				loadingText.text += line[bipCount];
 
